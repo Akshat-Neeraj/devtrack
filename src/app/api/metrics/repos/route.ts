@@ -45,11 +45,11 @@ function mergeRepoCommits(
   for (const repo of [...a, ...b]) {
     const existing = map.get(repo.name);
     map.set(repo.name, {
-      commits: (existing?.commits ?? 0) + repo.commits,
-      description: existing?.description ?? repo.description,
-      url: existing?.url ?? repo.url,
-      languages: existing?.languages ?? repo.languages,
-    });
+  commits: (existing?.commits ?? 0) + repo.commits,
+  description: repo.description || existing?.description || null,
+  url: repo.url || existing?.url || "",
+  languages: repo.languages || existing?.languages || [],
+});
   }
   return Array.from(map.entries())
     .map(([name, { commits, description, url, languages }]) => ({
